@@ -3,7 +3,7 @@
 export const nowPageState=(val,nowPage)=>{
 const nowPageStyle={
     fontWeight:'boldt',
-    backgroundColor:'rgba(120,120,120,.25)',
+    backgroundColor:'rgba(150,150,150,.75)',
 }
     if(val===nowPage){
         return nowPageStyle

@@ -65,23 +65,24 @@ allowfullscreen className='video-thumbnail'></iframe>
     return (
         <>        
             <div className='video-list'>
-                <div className='video-head' key={props.data.id}>
 
+                <div className='video-head' key={props.data.id} >
 <img src={handleVideoImage(props.data.snippet.thumbnails)} className='video-thumbnail'/>
 
                     <span className='video-time'>{getVideoTime(props.data.contentDetails.duration)}</span>
                     <div className='video-favor'>
-                    <span className='video-favor-btn flex all-center' onClick={()=>{
+                    <span className='video-favor-btn flex all-center' onClick={(e)=>{
                         addFavorToLocalStorage(props.data.id,addFavorState)
                         setFavorState(checkFavorState(props.data))
                     }}>{addFavorState?'取消收藏':'加入收藏'}</span>
                     <img src='/images/symbols.svg' className='video-favorlist-icon'/>
                     </div>
                     <div className="video-favorState">
+                    
                         <img src='/images/addFavor.svg' className='video-favor-icon' style={favorState} />
                     </div>
                 </div>
-                <div className='video-body'>
+                <div className='video-body' onClick={(e)=>props.setShowVideoItem(props.data.id)}>
                     <div className='video-title'>
                         <h3>{props.data.snippet.localized.title}</h3>
                     </div>

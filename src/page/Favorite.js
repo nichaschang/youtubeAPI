@@ -7,6 +7,10 @@ import {getFavorVideoData,sendFavorVideoData} from '../util/action/index'
 function Favorite(props) {
 
 const [getFavor,setGetFavor]=useState([])
+//影片ＩＤ 針對影片預覽更換使用
+const [showVideo,setShowVideo]=useState('')
+//影片名稱更改
+const [showVideoName,setShowVideoName]=useState('')
 
     useEffect(() => {
         let localbox=setFavorToLocalStorage()
@@ -32,24 +36,29 @@ const [getFavor,setGetFavor]=useState([])
         if(getFavor.length>0){
             props.getFavorVideoData(getFavor)
         }
-        
-        
     }, [getFavor])
+    
 
     useEffect(() => {
         console.log('props.getFavorVideoValue',props.getFavorVideoValue)
     }, [props.getFavorVideoValue])
 
+
+
     let favorDOM=[]
     let lastFavorVideoDOM=[]
-    
+    // <img src={handleVideoImage(v.snippet.thumbnails)} className='vedio-lastfavor-thumbnail margin-tb-1'/>
+    //<img src={handleVideoImage(v.snippet.thumbnails)}  className='video-favor-thumbnail'/>
     props.getFavorVideoValue.map((v,i)=>{
         favorDOM.push(
-            <li className='vedio-favor-list padding-1 margin-lr-auto' key={`${v}`}>
+            <li className='vedio-favor-list padding-1 margin-lr-auto' key={`${v}`} onClick={()=>{
+                setShowVideoName(v.snippet.title)
+                setShowVideo(v.id)
+            }}>
             <div className='flex favor-thumbnail-idx'>
             <p className='vedio-favor-idx flex all-center'>{i+1}</p>
             <img src={handleVideoImage(v.snippet.thumbnails)}  className='video-favor-thumbnail'/>
-
+           
             </div>
             <div className='flex favor-info'>
                 <div className='flexColumn flex margin-lr-1 favor-info-txt'>
@@ -76,10 +85,14 @@ const [getFavor,setGetFavor]=useState([])
             lastFavorVideoDOM.push(
                 <>
                 <div className='video-lastFavor'>
-                        <img src={handleVideoImage(v.snippet.thumbnails)} className='vedio-lastfavor-thumbnail margin-tb-1'/>
+<p>影片預覽：</p>
+            <iframe
+src={`https://www.youtube.com/embed/${showVideo?showVideo:v.id}?&autoplay=0`} frameborder="0" 
+allowfullscreen className='vedio-lastfavor-thumbnail'></iframe>
+                       
                         <div>
-                        <p>最近加入的影片：</p>
-                            <h3>{v.snippet.localized.title}</h3>
+                        <p>影片名稱：</p>
+                            <h3>{showVideoName?showVideoName:v.snippet.localized.title}</h3>
                         <h3>喜歡的影片</h3>
                         <p>共 {getFavor.length}部</p>
                         </div>

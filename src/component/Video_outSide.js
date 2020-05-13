@@ -8,7 +8,7 @@ function Video_outSide(props) {
     props.videosData.map((v,i)=>{
         if(props.itemMinIdx<=i && i<props.itemMaxIdx){
             boxDOM.push(
-                <Video_List data={v}/>
+                <Video_List data={v}  setShowVideoItem={(e)=> props.setShowVideoItem(e)}/>
             )
         }
     })

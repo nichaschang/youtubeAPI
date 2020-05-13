@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {getVideoData} from '../util/action/index'
 import {setFavorToLocalStorage} from '../util/Handle_localStorage'
+import ShowVideo from '../component/ShowVideo'
 function Home(props) {
 
 // 獲取總共會有幾頁
@@ -20,6 +21,11 @@ const [itemMaxIdx,setItemMaxIdx]=useState(0)
 
 //總項目數量
 const [listAmount,setListAmount]=useState(10)
+
+
+//顯示影片
+const [showVideoItem,setShowVideoItem]=useState('')
+
 
 //初始設定
 useEffect(()=>{
@@ -64,6 +70,9 @@ setItemMaxIdx(getMaxIndex)
 
 },[nowPage])
 
+useEffect(() => {
+    console.log('showVideoItem',showVideoItem)
+}, [showVideoItem])
 /*useEffect(()=>{
 console.log('nowPage',nowPage)
 console.log('needPage',needPage)
@@ -74,11 +83,20 @@ console.log('listAmount',listAmount)
 
     return (
         <div className='video-container margin-tb-1'>
+        {showVideoItem?(
+            <div className='show-Video-outbox'>
+            <ShowVideo 
+        showVideoItem={showVideoItem} 
+        setShowVideoItem={(e)=>setShowVideoItem(e)}/>
+
+            </div>
+        ):''}
             <Video_outSide
                 listAmount={listAmount}
                 itemMinIdx={itemMinIdx}
                 itemMaxIdx={itemMaxIdx}
                 videosData={props.getVideoValue}
+                setShowVideoItem={(e)=>setShowVideoItem(e)}
             />
             <Pagination 
                 needPage={needPage}
